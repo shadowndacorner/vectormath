@@ -1,3 +1,4 @@
+#pragma once
 /*
    Copyright (C) 2006, 2007 Sony Computer Entertainment Inc.
    All rights reserved.
@@ -81,9 +82,27 @@ class Transform3;
 
 VECTORMATH_ALIGNED_TYPE_PRE class Vector3
 {
-    __m128 mVec128;
+public:
+	union
+	{
+		__m128 mVec128;
+		struct
+		{
+			float x;
+			float y;
+			float z;
+		};
+
+		struct
+		{
+			float r;
+			float g;
+			float b;
+		};
+	};
 
 public:
+
 
     // Default constructor; does no initialization
     //
@@ -91,7 +110,8 @@ public:
 
     // Construct a 3-D vector from x, y, and z elements
     //
-    inline Vector3(float x, float y, float z);
+	template <typename Tx, typename Ty, typename Tz>
+    inline Vector3(Tx x, Ty y, Tz z);
 
     // Construct a 3-D vector from x, y, and z elements (scalar data contained in vector data type)
     //
@@ -433,9 +453,26 @@ inline void print(const Vector3 & vec, const char * name);
 
 VECTORMATH_ALIGNED_TYPE_PRE class Vector4
 {
-    __m128 mVec128;
-
 public:
+	union
+	{
+		__m128 mVec128;
+		struct
+		{
+			float x;
+			float y;
+			float z;
+			float w;
+		};
+
+		struct
+		{
+			float r;
+			float g;
+			float b;
+			float a;
+		};
+	};
 
     // Default constructor; does no initialization
     //
@@ -443,7 +480,8 @@ public:
 
     // Construct a 4-D vector from x, y, z, and w elements
     //
-    inline Vector4(float x, float y, float z, float w);
+	template <typename Tx, typename Ty, typename Tz, typename Tw>
+    inline Vector4(Tx x, Ty y, Tz z, Tw w);
 
     // Construct a 4-D vector from x, y, z, and w elements (scalar data contained in vector data type)
     //

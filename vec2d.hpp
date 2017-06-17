@@ -22,10 +22,25 @@ class Point2;
 
 class Vector2
 {
-    float mX;
-    float mY;
-
 public:
+	union
+	{
+		struct
+		{
+			float x;
+			float y;
+		};
+		struct
+		{
+			float r;
+			float g;
+		};
+		struct
+		{
+			float mX;
+			float mY;
+		};
+	};
 
     // Default constructor; does no initialization
     //
@@ -33,11 +48,12 @@ public:
 
     // Construct a 2-D vector from x and y elements
     //
-    inline Vector2(float x, float y);
+	template <typename T>
+	inline Vector2(T _x, T _y);
 
     // Copy elements from a 2-D point into a 2-D vector
     //
-    explicit inline Vector2(const Point2 & pnt);
+	explicit inline Vector2(const Point2 & pnt);
 
     // Set all elements of a 2-D vector to the same scalar value
     //
@@ -330,9 +346,11 @@ inline void print(const Point2 & pnt, const char * name);
 // Vector2 implementation
 // ================================================================================================
 
-inline Vector2::Vector2(float _x, float _y)
-    : mX(_x), mY(_y)
+template <typename T>
+inline Vector2::Vector2(T _x, T _y)
+	: mX(static_cast<float>(_x)), mY(static_cast<float>(_y))
 {
+	
 }
 
 inline Vector2::Vector2(const Point2 & pnt)

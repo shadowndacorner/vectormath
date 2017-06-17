@@ -9,7 +9,7 @@
 
 #ifndef VECTORMATH_COMMON_HPP
 #define VECTORMATH_COMMON_HPP
-
+#include <memory>
 namespace Vectormath
 {
 
@@ -130,6 +130,72 @@ namespace Vectormath
 
 		return vec;
 	}
+
+	inline void set_floats(float& f, const Vector2& vec)
+	{
+		std::memcpy(&f, toFloatPtr(vec), sizeof(float) * 2);
+	}
+
+	inline void set_floats(float& f, const Vector3& vec)
+	{
+		std::memcpy(&f, toFloatPtr(vec), sizeof(float) * 3);
+	}
+
+	inline void set_floats(float& f, const Vector4& vec)
+	{
+		std::memcpy(&f, toFloatPtr(vec), sizeof(float) * 4);
+	}
+
+	inline void set_floats(float* f, const Vector2& vec)
+	{
+		std::memcpy(f, toFloatPtr(vec), sizeof(float) * 2);
+	}
+
+	inline void set_floats(float* f, const Vector3& vec)
+	{
+		std::memcpy(f, toFloatPtr(vec), sizeof(float) * 3);
+	}
+
+	inline void set_floats(float* f, const Vector4& vec)
+	{
+		std::memcpy(f, toFloatPtr(vec), sizeof(float) * 4);
+	}
+
+	template <size_t fields, typename T = float>
+	struct PackedVector
+	{
+		float num[fields];
+		inline PackedVector()
+		{
+			for (size_t i = 0; i < fields; ++i)
+				num[i] = static_cast<T>(0);
+		}
+
+		inline PackedVector(const Vector2& rhs)
+		{
+			num[0] = static_cast<T>(rhs.x);
+			num[1] = static_cast<T>(rhs.y);
+		}
+
+		inline PackedVector(const Vector3& rhs)
+		{
+			num[0] = static_cast<T>(rhs.x);
+			num[1] = static_cast<T>(rhs.y);
+			if (fields > 2)
+				num[2] = static_cast<T>(rhs.z);
+		}
+
+		inline PackedVector(const Vector4& rhs)
+		{
+			num[0] = static_cast<T>(rhs.x);
+			num[1] = static_cast<T>(rhs.y);
+			if (fields > 2)
+				num[2] = static_cast<T>(rhs.z);
+
+			if (fields > 3)
+				num[3] = static_cast<T>(rhs.w);
+		};
+	};
 
 } // namespace Vectormath
 

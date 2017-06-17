@@ -113,9 +113,10 @@ inline FloatInVec VecIdx::operator -= (const FloatInVec & scalar)
 // Vector3
 // ========================================================
 
-inline Vector3::Vector3(float _x, float _y, float _z)
+template <typename Tx, typename Ty, typename Tz>
+inline Vector3::Vector3(Tx _x, Ty _y, Tz _z)
 {
-    mVec128 = _mm_setr_ps(_x, _y, _z, 0.0f);
+    mVec128 = _mm_setr_ps(static_cast<float>(_x), static_cast<float>(_y), static_cast<float>(_z), 0.0f);
 }
 
 inline Vector3::Vector3(const FloatInVec & _x, const FloatInVec & _y, const FloatInVec & _z)
@@ -527,9 +528,10 @@ inline void print(const Vector3 & vec, const char * name)
 // Vector4
 // ========================================================
 
-inline Vector4::Vector4(float _x, float _y, float _z, float _w)
+template <typename Tx, typename Ty, typename Tz, typename Tw>
+inline Vector4::Vector4(Tx _x, Ty _y, Tz _z, Tw _w)
 {
-    mVec128 = _mm_setr_ps(_x, _y, _z, _w);
+    mVec128 = _mm_setr_ps(static_cast<float>(_x), static_cast<float>(_y), static_cast<float>(_z), static_cast<float>(_w));
 }
 
 inline Vector4::Vector4(const FloatInVec & _x, const FloatInVec & _y, const FloatInVec & _z, const FloatInVec & _w)

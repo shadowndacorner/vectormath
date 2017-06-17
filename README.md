@@ -17,6 +17,11 @@ The main differences from the original library released by Sony:
 - Added an unpadded `Vector2` and `Point2` to also support basic 2D vector maths. These are always scalar mode (size = 2 floats).
 - All you need to do is include the public header file `vectormath.hpp`. It will expose the relevant parts of the library for you and try to select the SSE implementation if supported.
 
+Changes in this fork:
+- Templated constructors for vector types
+- Added glm-like swizzles to Vector3 and Vector4
+- Added packed data type for structs
+
 ### Original copyright notice:
 
 <pre>
