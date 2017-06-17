@@ -79,18 +79,20 @@ namespace Vectormath
 		return shadowMat;
 	}
 
+
+	// Euler functions from wikipedia (https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles)
 	inline Quat fromEuler(const Vector3& euler)
 	{
 		float pitch = euler.getX();
 		float yaw = euler.getY();
 		float roll = euler.getZ();
 
-		float t0 = std::cos(yaw * 0.5);
-		float t1 = std::sin(yaw * 0.5);
-		float t2 = std::cos(roll * 0.5);
-		float t3 = std::sin(roll * 0.5);
-		float t4 = std::cos(pitch * 0.5);
-		float t5 = std::sin(pitch * 0.5);
+		float t0 = std::cos(yaw * 0.5f);
+		float t1 = std::sin(yaw * 0.5f);
+		float t2 = std::cos(roll * 0.5f);
+		float t3 = std::sin(roll * 0.5f);
+		float t4 = std::cos(pitch * 0.5f);
+		float t5 = std::sin(pitch * 0.5f);
 
 		return Quat(t0 * t3 * t4 - t1 * t2 * t5, t0 * t2 * t5 + t1 * t3 * t4, t1 * t2 * t4 - t0 * t3 * t5, t0 * t2 * t4 + t1 * t3 * t5);
 	}
@@ -100,22 +102,22 @@ namespace Vectormath
 		float pitch;
 		float yaw;
 		float roll;
-		double ysqr = q.getY() * q.getY();
+		float ysqr = q.getY() * q.getY();
 
 		// roll (x-axis rotation)
-		double t0 = +2.0 * (q.getW() * q.getX() + q.getY() * q.getZ());
-		double t1 = +1.0 - 2.0 * (q.getX() * q.getX() + ysqr);
+		float t0 = +2.0f * (q.getW() * q.getX() + q.getY() * q.getZ());
+		float t1 = +1.0f - 2.0f * (q.getX() * q.getX() + ysqr);
 		roll = std::atan2(t0, t1);
 
 		// pitch (y-axis rotation)
-		double t2 = +2.0 * (q.getW() * q.getY() - q.getZ() * q.getX());
-		t2 = t2 > 1.0 ? 1.0 : t2;
-		t2 = t2 < -1.0 ? -1.0 : t2;
+		float t2 = +2.0f * (q.getW() * q.getY() - q.getZ() * q.getX());
+		t2 = t2 > 1.0f ? 1.0f : t2;
+		t2 = t2 < -1.0f ? -1.0f : t2;
 		pitch = std::asin(t2);
 
 		// yaw (z-axis rotation)
-		double t3 = +2.0 * (q.getW() * q.getZ() + q.getX() * q.getY());
-		double t4 = +1.0 - 2.0 * (ysqr + q.getZ() * q.getZ());
+		float t3 = +2.0f * (q.getW() * q.getZ() + q.getX() * q.getY());
+		float t4 = +1.0f - 2.0f * (ysqr + q.getZ() * q.getZ());
 		yaw = std::atan2(t3, t4);
 
 		return Vector3(pitch, yaw, roll);
