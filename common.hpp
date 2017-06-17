@@ -79,7 +79,6 @@ namespace Vectormath
 		return shadowMat;
 	}
 
-
 	// Euler functions from wikipedia (https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles)
 	inline Quat fromEuler(const Vector3& euler)
 	{
@@ -121,6 +120,15 @@ namespace Vectormath
 		yaw = std::atan2(t3, t4);
 
 		return Vector3(pitch, yaw, roll);
+	}
+
+	static Vector3 clampMagnitude(const Vector3& vec, float max)
+	{
+		auto len = length(vec);
+		if (len > max)
+			return vec / len * max;
+
+		return vec;
 	}
 
 } // namespace Vectormath
