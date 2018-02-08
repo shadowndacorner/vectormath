@@ -10,6 +10,7 @@
 #ifndef VECTORMATH_COMMON_HPP
 #define VECTORMATH_COMMON_HPP
 #include <memory>
+#include <cstring>
 namespace Vectormath
 {
 
