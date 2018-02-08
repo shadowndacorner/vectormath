@@ -29,7 +29,7 @@
 
 #ifndef VECTORMATH_SSE_MATRIX_HPP
 #define VECTORMATH_SSE_MATRIX_HPP
-
+#include <math.h>
 namespace Vectormath
 {
 namespace SSE
@@ -725,13 +725,13 @@ inline const Matrix4 inverse(const Matrix4 & mat)
     // sseRor is just a macro using _mm_shuffle_ps().
     tt = _L4;
     tt2 = sseRor(_L3, 1);
-    Vc = _mm_mul_ps(tt2, sseRor(tt, 0)); // V3'·V4
-    Va = _mm_mul_ps(tt2, sseRor(tt, 2)); // V3'·V4"
-    Vb = _mm_mul_ps(tt2, sseRor(tt, 3)); // V3'·V4^
+    Vc = _mm_mul_ps(tt2, sseRor(tt, 0)); // V3'ï¿½V4
+    Va = _mm_mul_ps(tt2, sseRor(tt, 2)); // V3'ï¿½V4"
+    Vb = _mm_mul_ps(tt2, sseRor(tt, 3)); // V3'ï¿½V4^
 
-    r1 = _mm_sub_ps(sseRor(Va, 1), sseRor(Vc, 2)); // V3"·V4^ - V3^·V4"
-    r2 = _mm_sub_ps(sseRor(Vb, 2), sseRor(Vb, 0)); // V3^·V4' - V3'·V4^
-    r3 = _mm_sub_ps(sseRor(Va, 0), sseRor(Vc, 1)); // V3'·V4" - V3"·V4'
+    r1 = _mm_sub_ps(sseRor(Va, 1), sseRor(Vc, 2)); // V3"ï¿½V4^ - V3^ï¿½V4"
+    r2 = _mm_sub_ps(sseRor(Vb, 2), sseRor(Vb, 0)); // V3^ï¿½V4' - V3'ï¿½V4^
+    r3 = _mm_sub_ps(sseRor(Va, 0), sseRor(Vc, 1)); // V3'ï¿½V4" - V3"ï¿½V4'
 
     tt = _L2;
     Va = sseRor(tt, 1);
@@ -764,13 +764,13 @@ inline const Matrix4 inverse(const Matrix4 & mat)
 
     // Calculating the minterms of the third line.
     tt = sseRor(_L1, 1);
-    Va = _mm_mul_ps(tt, Vb);  // V1'·V2"
-    Vb = _mm_mul_ps(tt, Vc);  // V1'·V2^
-    Vc = _mm_mul_ps(tt, _L2); // V1'·V2
+    Va = _mm_mul_ps(tt, Vb);  // V1'ï¿½V2"
+    Vb = _mm_mul_ps(tt, Vc);  // V1'ï¿½V2^
+    Vc = _mm_mul_ps(tt, _L2); // V1'ï¿½V2
 
-    r1 = _mm_sub_ps(sseRor(Va, 1), sseRor(Vc, 2)); // V1"·V2^ - V1^·V2"
-    r2 = _mm_sub_ps(sseRor(Vb, 2), sseRor(Vb, 0)); // V1^·V2' - V1'·V2^
-    r3 = _mm_sub_ps(sseRor(Va, 0), sseRor(Vc, 1)); // V1'·V2" - V1"·V2'
+    r1 = _mm_sub_ps(sseRor(Va, 1), sseRor(Vc, 2)); // V1"ï¿½V2^ - V1^ï¿½V2"
+    r2 = _mm_sub_ps(sseRor(Vb, 2), sseRor(Vb, 0)); // V1^ï¿½V2' - V1'ï¿½V2^
+    r3 = _mm_sub_ps(sseRor(Va, 0), sseRor(Vc, 1)); // V1'ï¿½V2" - V1"ï¿½V2'
 
     tt = sseRor(_L4, 1);
     sum = _mm_mul_ps(tt, r1);
@@ -847,13 +847,13 @@ inline const FloatInVec determinant(const Matrix4 & mat)
     // sseRor is just a macro using _mm_shuffle_ps().
     tt = _L4;
     tt2 = sseRor(_L3, 1);
-    Vc = _mm_mul_ps(tt2, sseRor(tt, 0)); // V3'·V4
-    Va = _mm_mul_ps(tt2, sseRor(tt, 2)); // V3'·V4"
-    Vb = _mm_mul_ps(tt2, sseRor(tt, 3)); // V3'·V4^
+    Vc = _mm_mul_ps(tt2, sseRor(tt, 0)); // V3'ï¿½V4
+    Va = _mm_mul_ps(tt2, sseRor(tt, 2)); // V3'ï¿½V4"
+    Vb = _mm_mul_ps(tt2, sseRor(tt, 3)); // V3'ï¿½V4^
 
-    r1 = _mm_sub_ps(sseRor(Va, 1), sseRor(Vc, 2)); // V3"·V4^ - V3^·V4"
-    r2 = _mm_sub_ps(sseRor(Vb, 2), sseRor(Vb, 0)); // V3^·V4' - V3'·V4^
-    r3 = _mm_sub_ps(sseRor(Va, 0), sseRor(Vc, 1)); // V3'·V4" - V3"·V4'
+    r1 = _mm_sub_ps(sseRor(Va, 1), sseRor(Vc, 2)); // V3"ï¿½V4^ - V3^ï¿½V4"
+    r2 = _mm_sub_ps(sseRor(Vb, 2), sseRor(Vb, 0)); // V3^ï¿½V4' - V3'ï¿½V4^
+    r3 = _mm_sub_ps(sseRor(Va, 0), sseRor(Vc, 1)); // V3'ï¿½V4" - V3"ï¿½V4'
 
     tt = _L2;
     Va = sseRor(tt, 1);
@@ -1237,7 +1237,7 @@ inline const Matrix4 Matrix4::perspective(float fovyRadians, float aspect, float
     SSEFloat tmp;
     __m128 col0, col1, col2, col3;
 
-    f = std::tanf(VECTORMATH_PI_OVER_2 - fovyRadians * 0.5f);
+    f = tanf(VECTORMATH_PI_OVER_2 - fovyRadians * 0.5f);
     rangeInv = 1.0f / (zNear - zFar);
     const __m128 zero = _mm_setzero_ps();
     tmp.m128 = zero;
